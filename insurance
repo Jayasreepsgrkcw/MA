@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InsuranceActivity">
+
+    <EditText
+        android:id="@+id/vehicleNumberEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Vehicle Number"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:id="@+id/insuranceAmountEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Insurance Amount"
+        android:layout_below="@id/vehicleNumberEditText"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/calculateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate"
+        android:layout_below="@id/insuranceAmountEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_below="@id/calculateButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+</RelativeLayout>
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class InsuranceActivity extends AppCompatActivity {
+
+    EditText vehicleNumberEditText;
+    EditText insuranceAmountEditText;
+    Button calculateButton;
+    TextView resultTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_insurance);
+
+        vehicleNumberEditText = findViewById(R.id.vehicleNumberEditText);
+        insuranceAmountEditText = findViewById(R.id.insuranceAmountEditText);
+        calculateButton = findViewById(R.id.calculateButton);
+        resultTextView = findViewById(R.id.resultTextView);
+
+        calculateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calculateInsurance();
+            }
+        });
+    }
+
+    private void calculateInsurance() {
+        String vehicleNumber = vehicleNumberEditText.getText().toString();
+        double insuranceAmount = Double.parseDouble(insuranceAmountEditText.getText().toString());
+
+        // Calculate insurance payment (a simple calculation for demonstration)
+        double insurancePayment = insuranceAmount * 0.1; // Assuming 10% of the insurance amount
+
+        // Display the result
+        resultTextView.setText("Insurance payment for vehicle " + vehicleNumber + " is: $" + insurancePayment);
+    }
+}
