@@ -1,0 +1,54 @@
+package com.example.myapplication;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ListView listView;
+    private String[] foodItems = {"Pizza", "Burger", "Sushi", "Tacos", "Pasta"};
+    private double[] prices = {10.99, 8.49, 12.99, 9.99, 11.49};
+
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        listView = findViewById(R.id.listView);
+
+        // Create an ArrayAdapter to populate the ListView
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, foodItems);
+
+        // Set the ArrayAdapter on the ListView
+        listView.setAdapter(adapter);
+
+        // Set item click listener to display price of selected food item
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedFood = foodItems[position];
+            double price = prices[position];
+            // Display price using Toast or any other method
+            // For simplicity, we're just printing it to the console
+            System.out.println("Price of " + selectedFood + ": $" + price);
+        });
+    }
+}
+
+xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
