@@ -1,0 +1,80 @@
+package com.example.myapplication;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Spinner colorSpinner;
+    private View colorView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        colorSpinner = findViewById(R.id.colorSpinner);
+        colorView = findViewById(R.id.colorView);
+
+        // Define colors
+        final String[] colors = {"Red", "Green", "Blue"};
+        final int[] colorValues = {Color.RED, Color.GREEN, Color.BLUE};
+
+        // Create adapter for spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, colors);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        colorSpinner.setAdapter(adapter);
+
+        // Set up item selected listener
+        colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Change background color of the view
+                colorView.setBackgroundColor(colorValues[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
+    }
+}
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Spinner
+        android:id="@+id/colorSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <View
+        android:id="@+id/colorView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/colorSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+</RelativeLayout>
+
+resources>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorGreen">#00FF00</color>
+    <color name="colorBlue">#0000FF</color>
+</resources>
