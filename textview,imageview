@@ -1,0 +1,75 @@
+activity_main.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/sun"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/greetingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Good morning!"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
+
+MainActivity.java:
+// MainActivity.java
+package com.example.myapp;
+
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ImageView imageView;
+    private TextView greetingTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize views
+        imageView = findViewById(R.id.imageView);
+        greetingTextView = findViewById(R.id.greetingTextView);
+
+        // Change greeting based on current time
+        updateTimeBasedGreeting();
+    }
+
+    private void updateTimeBasedGreeting() {
+        int hour = getCurrentHour();
+
+        // Update greeting based on current time
+        if (hour >= 0 && hour < 12) {
+            greetingTextView.setText("Good morning!");
+        } else if (hour >= 12 && hour < 18) {
+            greetingTextView.setText("Good afternoon!");
+        } else {
+            greetingTextView.setText("Good evening!");
+        }
+    }
+
+    private int getCurrentHour() {
+        // Get current hour of the day
+        return java.time.LocalTime.now().getHour();
+    }
+}
