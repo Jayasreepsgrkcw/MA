@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/guest_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter guest name"
+        android:layout_alignParentTop="true"/>
+
+    <Button
+        android:id="@+id/add_guest_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Guest"
+        android:layout_below="@id/guest_name_input"/>
+
+    <Button
+        android:id="@+id/delete_guest_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Last Guest"
+        android:layout_below="@id/add_guest_button"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/update_guest_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Guest"
+        android:layout_below="@id/delete_guest_button"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/guest_list_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/update_guest_button"
+        android:layout_marginTop="16dp"
+        android:text="Guest List:"
+        android:textStyle="bold"/>
+
+</RelativeLayout>
+
+package com.example.studentapplication;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText guestNameInput;
+    Button addGuestButton;
+    TextView guestListTextView;
+    Button deleteGuestButton;
+    Button updateGuestButton;
+
+    List<String> guestList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        guestNameInput = findViewById(R.id.guest_name_input);
+        addGuestButton = findViewById(R.id.add_guest_button);
+        guestListTextView = findViewById(R.id.guest_list_text_view);
+        deleteGuestButton = findViewById(R.id.delete_guest_button);
+        updateGuestButton = findViewById(R.id.update_guest_button);
+
+        guestList = new ArrayList<>();
+
+        addGuestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String guestName = guestNameInput.getText().toString();
+                if (!guestName.isEmpty()) {
+                    guestList.add(guestName);
+                    updateGuestList();
+                    guestNameInput.setText("");
+                }
+            }
+        });
+
+        deleteGuestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!guestList.isEmpty()) {
+                    guestList.remove(guestList.size() - 1);
+                    updateGuestList();
+                }
+            }
+        });
+
+        updateGuestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Update functionality (not implemented in this example)
+                // You may implement it to update a guest's name
+            }
+        });
+    }
+
+    private void updateGuestList() {
+        StringBuilder guests = new StringBuilder();
+        for (String guest : guestList) {
+            guests.append(guest).append("\n");
+        }
+        guestListTextView.setText(guests.toString());
+    }
+}
