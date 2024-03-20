@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:entries="@array/planets_array" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="16dp"
+        android:src="@drawable/ic_launcher_foreground" />
+</RelativeLayout>
+
+
+
+
+
+
+
+
+<!-- arrays.xml -->
+<resources>
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <!-- Add more items as needed -->
+    </string-array>
+</resources>
+
+
+
+
+
+
+JAVA CODE
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Spinner spinner;
+    private ImageView imageView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        spinner = findViewById(R.id.spinner);
+        imageView = findViewById(R.id.imageView);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.planets_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedOption = (String) parentView.getItemAtPosition(position);
+                int imageResource = 0;
+
+                // Set the image resource based on the selected option
+                switch (selectedOption) {
+                    case "Mercury":
+                        imageResource = R.drawable.mercury_image;
+                        break;
+                    case "Venus":
+                        imageResource = R.drawable.venus_image;
+                        break;
+                    case "Earth":
+                        imageResource = R.drawable.earth_image;
+                        break;
+                    // Add more cases for other options as needed
+                }
+
+                // Set the image
+                imageView.setImageResource(imageResource);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Do nothing
+            }
+        });
+    }
+}
+
+
+
+
+
+
+spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    @Override
+    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+        String selectedOption = (String) parentView.getItemAtPosition(position);
+        int imageResource = 0;
+
+        // Set the image resource based on the selected option
+        switch (selectedOption) {
+            case "Mercury":
+                imageResource = R.drawable.mercury_image;
+                break;
+            case "Venus":
+                imageResource = R.drawable.venus_image;
+                break;
+            case "Earth":
+                imageResource = R.drawable.earth_image;
+                break;
+            // Add more cases for other options as needed
+        }
+
+        // Set the image
+        imageView.setImageResource(imageResource);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parentView) {
+        // Do nothing
+    }
+});
+
+
